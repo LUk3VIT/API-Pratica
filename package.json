@@ -1,0 +1,31 @@
+{
+  "name": "api-pratica",
+  "version": "1.0.0",
+  "description": "Nesse projeto colocarei em pratica, o conhecimento de montar um API REST simples, para isso vamos usar Express e TypeScript",
+  "main": "index.js",
+  "scripts": {
+    "dev": "ts-node-dev --respawn src/server.ts",
+    "build": "tsc",
+    "start": "node dist/server.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/LUk3VIT/API-Pratica.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/LUk3VIT/API-Pratica/issues"
+  },
+  "homepage": "https://github.com/LUk3VIT/API-Pratica#readme",
+  "dependencies": {
+    "express": "^5.1.0"
+  },
+  "devDependencies": {
+    "@types/express": "^5.0.3",
+    "@types/node": "^24.7.2",
+    "ts-node-dev": "^2.0.0",
+    "typescript": "^5.9.3"
+  }
+}
