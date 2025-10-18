@@ -3,9 +3,9 @@
 Nesse projeto colocarei em pratica, o conhecimento de montar um API REST simples, para isso vamos usar Express e TypeScript
 
 1️⃣ iniciar o projeto
-
-    ```npm init -y```
-
+    ```
+    npm
+    ```
 2️⃣ baixar as dependencias
 
 Dependência Principal:
@@ -19,8 +19,8 @@ Dependência de desenvolvimento:
 3. Criar o arquivo de configuração do typeScript
 
 npx tsc --init
-
-   ```{
+   ```
+   {
    "compilerOptions": {
       "target": "ES2020",
       "module": "commonjs",
@@ -29,8 +29,8 @@ npx tsc --init
       "strict": true,
       "esModuleInterop": true
     }
-   }```
-
+   }
+   ```
 4. Estruturar o projeto
 
 Crie as pastas principais:
