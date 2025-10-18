@@ -1,25 +1,41 @@
 # API-Pratica
- 
-Nesse projeto colocarei em pratica, o conhecimento de montar um API REST simples, para isso vamos usar Express e TypeScript
 
-1️⃣ iniciar o projeto
-    ```
-    npm
-    ```
-2️⃣ baixar as dependencias
+Nesse projeto colocarei em pratica, o conhecimento de montar um API REST simples, 
+para isso vamos usar Express, Swagger, JWT e TypeScript
+
+# Exprexx
+
+Ele é a parte principal da API ele que vai fazer a parte estrutural
+
+## 1️⃣ iniciar o projeto
+    
+```
+npm init -y
+```    
+    
+## 2️⃣ baixar as dependencias
 
 Dependência Principal:
 
-   ```npm install express```
+```
+npm install express
+```
+   
+## 3️⃣ Dependência de desenvolvimento
 
-Dependência de desenvolvimento:
+```
+npm install -D typescript ts-node-dev @types/node @types/express
+```
 
-   ```npm install -D typescript ts-node-dev @types/node @types/express```
+## 4️⃣ Criar o arquivo de configuração do typeScript
 
-3. Criar o arquivo de configuração do typeScript
-
+```
 npx tsc --init
-   ```
+```
+
+Edite o arquivo tsconfig.json para ter as opções abaixo:
+
+   ```typescript
    {
    "compilerOptions": {
       "target": "ES2020",
@@ -31,39 +47,47 @@ npx tsc --init
     }
    }
    ```
-4. Estruturar o projeto
+
+## 5️⃣ Estruturar o projeto
 
 Crie as pastas principais:
 
-    mkdir src src/routes src/controllers
+```
+mkdir src src/routes src/controllers
+```
 
 A estrutura ficará assim:
 
+```
    src/
    ├── controllers/
    │    └── UserController.ts
    ├── routes/
    │    └── userRoutes.ts
    └── server.ts
+```
 
-5. Configurar scripts no package.json
+## 6️⃣ Configurar scripts no package.json
 
 Abra o arquivo package.json e adicione os scripts:
 
+```typescript
    "scripts": {
    "dev": "ts-node-dev --respawn src/server.ts",
    "build": "tsc",
    "start": "node dist/server.js"
    }
+```
 
-   dev: roda a API em modo desenvolvimento
-   build: compila os arquivos TS para JS
-   start: roda o projeto já compilado
+- **`dev`:** roda a API em modo desenvolvimento
+- **`build`:** compila os arquivos TS para JS
+- **`start`:** roda o projeto já compilado
 
-6. Criar o servidor (server.ts)
+## 7️⃣ Criar o servidor (server.ts)
 
-Crie o arquivo src/server.ts com o seguinte código:
+Crie o arquivo `src/server.ts` com o seguinte código:
 
+```typescript
    import express from "express";
    import userRoutes from "./routes/userRoutes";
 
@@ -77,11 +101,13 @@ Crie o arquivo src/server.ts com o seguinte código:
    app.listen(PORT, () => {
    console.log(`🚀 Server running at http://localhost:${PORT}`);
    });
+```
 
-7. Criar as rotas (userRoutes.ts)
+## 8️⃣ Criar as rotas (userRoutes.ts)
 
 Crie o arquivo src/routes/userRoutes.ts:
 
+```typescript
    import { Router } from "express";
    import { UserController } from "../controllers/UserController";
 
@@ -95,11 +121,13 @@ Crie o arquivo src/routes/userRoutes.ts:
    router.delete("/:id", (req, res) => userController.delete(req, res));
 
    export default router;
+```
 
-9. Criar o controller (UserController.ts)
+## 9️⃣ Criar o controller (UserController.ts)
 
 Crie o arquivo src/controllers/UserController.ts:
 
+```typescript
    import { Request, Response } from "express";
 
    interface User {
@@ -146,18 +174,260 @@ Crie o arquivo src/controllers/UserController.ts:
       return res.status(204).send();
    }
    }
+```
 
-9. Rodar a API
+## 🔟 Rodar a API
+
 Execute o comando:
 
-   npm run dev
+```
+npm run dev
+```
 
 Se tudo deu certo, você verá no terminal:
 
-   🚀 Server running at http://localhost:3000
+`🚀 Server running at http://localhost:3000`
 
+Para testar a API usar Postman ou Insomnia 
 
-Swagger
+# Swagger
 
-para esse passo a passo faremos documentação e testes das rotas de api, 
+para esse passo a passo terenis agora documentação automática e testes das rotas
+da API com Swagger
+
+## 1️⃣ Instalar dependências do Swagger
+
+```
+npm install swagger-ui-express swagger-jsdoc
+npm install -D @types/swagger-ui-express @types/swagger-jsdoc
+```
+
+## 2️⃣ Criar pasta config
+
+```
+mkdir src/config
+```
+
+## 3️⃣ Criar configuração do Swagger
+
+Crie o arquivo src/config/swagger.ts:
+
+```typescript
+import swaggerJSDoc from 'swagger-jsdoc';
+
+const options = {
+  definition: {
+    openapi: '3.0.0',
+    info: {
+      title: 'API de Usuários',
+      version: '1.0.0',
+      description: 'API REST para gerenciamento de usuários',
+    },
+    servers: [
+      {
+        url: 'http://localhost:3000',
+        description: 'Servidor de desenvolvimento',
+      },
+    ],
+  },
+  apis: ['./src/routes/*.ts', './src/controllers/*.ts'],
+};
+
+export const swaggerSpec = swaggerJSDoc(options);
+```
+
+## 4️⃣ Atualizar o servidor
+
+Modifique `src/server.ts:`
+
+```typescript
+import express from "express";
+import swaggerUi from 'swagger-ui-express';
+import { swaggerSpec } from './config/swagger';
+import userRoutes from "./routes/userRoutes";
+
+const app = express();
+app.use(express.json());
+
+// Swagger
+app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(swaggerSpec));
+
+// Rotas
+app.use("/api/users", userRoutes);
+
+const PORT = 3000;
+app.listen(PORT, () => {
+  console.log(`🚀 Server running at http://localhost:${PORT}`);
+  console.log(`📚 Swagger docs at http://localhost:${PORT}/api-docs`);
+});
+```
+
+## 5️⃣ Documentar as rotas
+
+Atualize `src/routes/userRoutes.ts`:
+
+```typescript
+import { Router } from "express";
+import { UserController } from "../controllers/UserController";
+
+const router = Router();
+const userController = new UserController();
+
+/**
+ * @swagger
+ * components:
+ *   schemas:
+ *     User:
+ *       type: object
+ *       required:
+ *         - name
+ *         - email
+ *       properties:
+ *         id:
+ *           type: integer
+ *           description: ID único do usuário
+ *         name:
+ *           type: string
+ *           description: Nome do usuário
+ *         email:
+ *           type: string
+ *           description: Email do usuário
+ */
+
+/**
+ * @swagger
+ * /api/users:
+ *   get:
+ *     summary: Lista todos os usuários
+ *     tags: [Users]
+ *     responses:
+ *       200:
+ *         description: Lista de usuários
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: array
+ *               items:
+ *                 $ref: '#/components/schemas/User'
+ */
+router.get("/", (req, res) => userController.getAll(req, res));
+
+/**
+ * @swagger
+ * /api/users/{id}:
+ *   get:
+ *     summary: Busca usuário por ID
+ *     tags: [Users]
+ *     parameters:
+ *       - in: path
+ *         name: id
+ *         schema:
+ *           type: integer
+ *         required: true
+ *         description: ID do usuário
+ *     responses:
+ *       200:
+ *         description: Usuário encontrado
+ *         content:
+ *           application/json:
+ *             schema:
+ *               $ref: '#/components/schemas/User'
+ *       404:
+ *         description: Usuário não encontrado
+ */
+router.get("/:id", (req, res) => userController.getById(req, res));
+
+/**
+ * @swagger
+ * /api/users:
+ *   post:
+ *     summary: Cria novo usuário
+ *     tags: [Users]
+ *     requestBody:
+ *       required: true
+ *       content:
+ *         application/json:
+ *           schema:
+ *             type: object
+ *             required:
+ *               - name
+ *               - email
+ *             properties:
+ *               name:
+ *                 type: string
+ *               email:
+ *                 type: string
+ *     responses:
+ *       201:
+ *         description: Usuário criado
+ *         content:
+ *           application/json:
+ *             schema:
+ *               $ref: '#/components/schemas/User'
+ */
+router.post("/", (req, res) => userController.create(req, res));
+
+/**
+ * @swagger
+ * /api/users/{id}:
+ *   put:
+ *     summary: Atualiza usuário
+ *     tags: [Users]
+ *     parameters:
+ *       - in: path
+ *         name: id
+ *         schema:
+ *           type: integer
+ *         required: true
+ *     requestBody:
+ *       required: true
+ *       content:
+ *         application/json:
+ *           schema:
+ *             type: object
+ *             properties:
+ *               name:
+ *                 type: string
+ *               email:
+ *                 type: string
+ *     responses:
+ *       200:
+ *         description: Usuário atualizado
+ *       404:
+ *         description: Usuário não encontrado
+ */
+router.put("/:id", (req, res) => userController.update(req, res));
+
+/**
+ * @swagger
+ * /api/users/{id}:
+ *   delete:
+ *     summary: Remove usuário
+ *     tags: [Users]
+ *     parameters:
+ *       - in: path
+ *         name: id
+ *         schema:
+ *           type: integer
+ *         required: true
+ *     responses:
+ *       204:
+ *         description: Usuário removido
+ *       404:
+ *         description: Usuário não encontrado
+ */
+router.delete("/:id", (req, res) => userController.delete(req, res));
+
+export default router;
+```
+
+## 6️⃣ Testar a documentação
+
+Execute a API:
+
+```
+npm run dev
+```
+
+Acesse: `http://localhost:3000/api-docs`
 
