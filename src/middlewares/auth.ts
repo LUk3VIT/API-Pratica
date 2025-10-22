@@ -8,8 +8,9 @@ export interface AuthRequest extends Request {
 }
 
 export const authMiddleware = (req: AuthRequest, res: Response, next: NextFunction) => {
-    const token = req.header('Authorization')?.replace('Bearer ', '');
-
+    const authHeader = req.header('Authorization');
+    const token = authHeader?.startsWith('Bearer ') ? authHeader.substring(7) : authHeader;
+    
     if(!token){
         return res.status(401).json({message: 'Token não Fornecido'});
     }

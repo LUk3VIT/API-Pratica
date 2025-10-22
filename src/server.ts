@@ -4,15 +4,16 @@ import { swaggerSpec } from "./config/swagger";
 import userRoutes from "./routes/userRoutes";
 import authRoutes from "./routes/authRoutes";        
 
+
 const app = express();
 app.use(express.json());
 
 //Swagger
-app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(swaggerSpec));
-
 //Rotas
-app.use("/api/auth", authRoutes);
+
+app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(swaggerSpec));
 app.use("/api/users", userRoutes);
+app.use("/api/auth", authRoutes);
 
 const PORT = 3000;
 app.listen(PORT, ()=>{

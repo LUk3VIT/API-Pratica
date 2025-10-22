@@ -13,23 +13,13 @@ interface LoginUser {
 }
 
 export class AuthController {
-    private users: LoginUser[] = [
-        {
-            id: 1,
-            email: 'admin@teste.com',
-            password: '$2a$10$92IXUNpkjO0rOQ5byMi.Ye4oKoEa3Ro9llC/.og/at2.uheWG/igi',
-            name: 'Admin'
-        }
-    ];
+    private users: LoginUser[] = [];
 
     async login(req: Request, res: Response): Promise<Response>{
         const { email, password } = req.body;
 
-        if (!email || !password){
-            return res.status(400).json({ message: 'Email e senha são obrigatórios'});
-        }
-
         const user = this.users.find(u => u.email === email);
+
         if (!user){
             return res.status(401).json({ message: 'Credenciais inválidas'});
         }
@@ -39,24 +29,22 @@ export class AuthController {
             return res.status(401).json({ message: 'Credenciais inválidas'});
         }
 
-        const token = jwt.sign({ userId: user.id }, JWT_SECRET, { expiresIn: '24h' });
+        const token = jwt.sign(
+            { userId: user.id, unserName: user.name },
+            JWT_SECRET,
+            { expiresIn: '24h' }
+        );
 
-        return res.json({
-            token,
-            user: {
-                id: user.id,
-                name: user.name,
-                email: user.email
-            }
-        });
+        console.log('---- token', token);
+
+        return res.json({ token: token });
     }
 
     async register(req: Request, res: Response): Promise<Response> {
         const {name, email, password} = req.body;
 
-        if (!name || !email || !password) {
-            return res.status(400).json({ message: 'Todos os campos são obrigatórios' });
-        }
+        //TODO Validar se todas as informações forma enviada
+        //     senão, voltar 400 com msg
 
         const existingUser = this.users.find(u => u.email === email);
         if (existingUser) {
@@ -73,16 +61,7 @@ export class AuthController {
 
         this.users.push(newUser);
 
-        const token = jwt.sign({userId: newUser.id }, JWT_SECRET, { expiresIn: '24h'});
-
-        return res.status(201).json({
-            token,
-            user: {
-                id: newUser.id,
-                name: newUser.name,
-                email: newUser.email
-            }
-        });
+        return res.status(201).json({ message: 'Usuario criado com sucesso'});
     }
 }
 
