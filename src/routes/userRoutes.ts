@@ -1,10 +1,11 @@
 import { Router } from "express";
 import { UserController } from "../controllers/UserController";
+import { authMiddleware } from "../middlewares/auth";
 
 const router = Router();
 const userController = new UserController();
 
-
+router.use(authMiddleware);
 
 /**
  * @swagger
@@ -33,6 +34,8 @@ const userController = new UserController();
  *   get:
  *     summary: Lista todos os usuários
  *     tags: [Users]
+ *     security:
+ *       - bearerAuth: []
  *     responses:
  *       200:
  *         description: Lista de usuários
@@ -42,6 +45,8 @@ const userController = new UserController();
  *               type: array
  *               items:
  *                 $ref: '#/components/schemas/User'
+ *       404:
+ *         description: Nenhum usuário encontrado
  */
 
 router.get("/", (req, res) => userController.getAll(req, res));
@@ -52,6 +57,8 @@ router.get("/", (req, res) => userController.getAll(req, res));
  *   get:
  *     summary: Busca usuário por ID
  *     tags: [Users]
+ *     security:
+ *       - bearerAuth: []
  *     parameters:
  *       - in: path
  *         name: id
@@ -77,6 +84,8 @@ router.get("/:id", (req, res) => userController.getById(req, res));
  *   post:
  *     summary: Cria novo usuário
  *     tags: [Users]
+ *     security:
+ *       - bearerAuth: []
  *     requestBody:
  *       required: true
  *       content:
@@ -107,6 +116,8 @@ router.post("/", (req,res) => userController.create(req, res));
  *   put:
  *     summary: Atualiza usuário
  *     tags: [Users]
+ *     security:
+ *       - bearerAuth: []
  *     parameters:
  *       - in: path
  *         name: id
@@ -138,6 +149,8 @@ router.put("/:id", (req, res) => userController.update(req, res));
  *   delete:
  *     summary: Remove usuário
  *     tags: [Users]
+ *     security:
+ *       - bearerAuth: []
  *     parameters:
  *       - in: path
  *         name: id
