@@ -1,9 +1,9 @@
 import { Router } from "express";
-import { UserController } from "../controllers/UserController";
+import { ProdutoController } from "../controllers/ProdutoController";
 import { authMiddleware } from "../middlewares/auth";
 
 const router = Router();
-const userController = new UserController();
+const userController = new ProdutoController();
 
 router.use(authMiddleware);
 
@@ -11,52 +11,52 @@ router.use(authMiddleware);
  * @swagger
  * components:
  *  schemas:
- *      User:
+ *      Produto:
  *          type: object
  *          required:
  *              - name
- *              - email
+ *              - tipo
  *          properties:
  *              id:
  *                  type: integer
- *                  description: ID único do usuário
+ *                  description: ID único do produto
  *              name: 
  *                  type: string
- *                  description: Nome do usuário
- *              email:
+ *                  description: Nome do produto
+ *              tipo:
  *                  type: string
- *                  description: Email do usuário
+ *                  description: Categoria do produto
  */
 
 /**
  * @swagger
- * /api/users:
+ * /api/produto:
  *   get:
- *     summary: Lista todos os usuários
- *     tags: [Users]
+ *     summary: Lista todos os Produtos
+ *     tags: [Produto]
  *     security:
  *       - bearerAuth: []
  *     responses:
  *       200:
- *         description: Lista de usuários
+ *         description: Lista de Produtos
  *         content:
  *           application/json:
  *             schema:
  *               type: array
  *               items:
- *                 $ref: '#/components/schemas/User'
+ *                 $ref: '#/components/schemas/Produto'
  *       404:
- *         description: Nenhum usuário encontrado
+ *         description: Nenhum Produto encontrado
  */
 
 router.get("/", (req, res) => userController.getAll(req, res));
 
 /**
  * @swagger
- * /api/users/{id}:
+ * /api/produto/{id}:
  *   get:
- *     summary: Busca usuário por ID
- *     tags: [Users]
+ *     summary: Busca Produto por ID
+ *     tags: []
  *     security:
  *       - bearerAuth: []
  *     parameters:
@@ -65,16 +65,16 @@ router.get("/", (req, res) => userController.getAll(req, res));
  *         schema:
  *           type: integer
  *         required: true
- *         description: ID do usuário
+ *         description: ID do Produto
  *     responses:
  *       200:
- *         description: Usuário encontrado
+ *         description: Produto encontrado
  *         content:
  *           application/json:
  *             schema:
- *               $ref: '#/components/schemas/User'
+ *               $ref: '#/components/schemas/Produto'
  *       404:
- *         description: Usuário não encontrado
+ *         description: Produto não encontrado
  */
 router.get("/:id", (req, res) => userController.getById(req, res));
 

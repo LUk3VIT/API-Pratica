@@ -1,46 +1,47 @@
 import { Request, Response } from "express";
 
-interface User {
+interface Produto {
     id: number;
     name: string;
-    email: string;
+    tipo: string;
+
 }
 
-export class UserController{
-    private users: User[] = [];
+export class ProdutoController{
+    private prod: Produto[] = [];
     private idCounter = 1;
 
     getAll(req: Request, res: Response): Response{
-        return res.json(this.users);
+        return res.json(this.prod);
     }
 
     getById(req: Request, res: Response): Response{
         const id = Number(req.params.id);
-        const user = this.users.find(u => u.id === id)
-        return user ? res.json(user) : res.status(404).json({message: "User not found"})
+        const user = this.prod.find(p => p.id === id)
+        return user ? res.json(user) : res.status(404).json({message: "Produto not found"})
     }
 
     create (req: Request, res: Response): Response{
-        const {name,email} = req.body;
-        const newUser: User = {id: this.idCounter++, name, email}
-        this.users.push(newUser);
+        const {name,tipo} = req.body;
+        const newUser: Produto = {id: this.idCounter++, name, tipo};
+        this.prod.push(newUser);
         return res.status(201).json(newUser);
     }
 
     update (req: Request, res: Response): Response{
         const id = Number(req.params.id);
         const { name, email } = req.body;
-        const user = this.users.find(u => u.id === id);
-        if (!user) return res.status(404).json({message: "User not found"});
+        const user = this.prod.find(u => u.id === id);
+        if (!user) return res.status(404).json({message: "Produto not found"});
         
         user.name = name ?? user.name;
-        user.email = email ?? user.email;
+        user.tipo = email ?? user.tipo;
         return res.json(user);
     }
 
     delete( req: Request, res: Response): Response{
         const id = Number(req.params.id);
-        this.users = this.users.filter(u => u.id !== id)
+        this.prod = this.prod.filter(p => p.id !== id)
         return res.status(204).send();
     }
 }

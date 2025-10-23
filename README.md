@@ -680,4 +680,5 @@ Acesse: `http://localhost:3000/api-docs`
 # Databese/SQLite
 
 Agora vamos usar um banco de dados para persistência de dados 
-e implementarpadrão Repository e Service
+e implementar padrão Repository e Service
+

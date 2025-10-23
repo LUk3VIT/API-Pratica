@@ -1,7 +1,7 @@
 import express from "express";
 import swaggerUi from 'swagger-ui-express';
 import { swaggerSpec } from "./config/swagger";
-import userRoutes from "./routes/userRoutes";
+import produtoRoutes from "./routes/produtoRoutes";
 import authRoutes from "./routes/authRoutes";        
 
 
@@ -12,7 +12,7 @@ app.use(express.json());
 //Rotas
 
 app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(swaggerSpec));
-app.use("/api/users", userRoutes);
+app.use("/api/produto", produtoRoutes);
 app.use("/api/auth", authRoutes);
 
 const PORT = 3000;
