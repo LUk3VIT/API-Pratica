@@ -3,7 +3,7 @@ import { ProdutoController } from "../controllers/ProdutoController";
 import { authMiddleware } from "../middlewares/auth";
 
 const router = Router();
-const userController = new ProdutoController();
+const ProdutosController = new ProdutoController();
 
 router.use(authMiddleware);
 
@@ -49,14 +49,14 @@ router.use(authMiddleware);
  *         description: Nenhum Produto encontrado
  */
 
-router.get("/", (req, res) => userController.getAll(req, res));
+router.get("/", (req, res) => ProdutosController.getAll(req, res));
 
 /**
  * @swagger
  * /api/produto/{id}:
  *   get:
  *     summary: Busca Produto por ID
- *     tags: []
+ *     tags: [Produto]
  *     security:
  *       - bearerAuth: []
  *     parameters:
@@ -76,14 +76,14 @@ router.get("/", (req, res) => userController.getAll(req, res));
  *       404:
  *         description: Produto não encontrado
  */
-router.get("/:id", (req, res) => userController.getById(req, res));
+router.get("/:id", (req, res) => ProdutosController.getById(req, res));
 
 /**
  * @swagger
- * /api/users:
+ * /api/produto:
  *   post:
- *     summary: Cria novo usuário
- *     tags: [Users]
+ *     summary: Cria novo Produtos
+ *     tags: [Produto]
  *     security:
  *       - bearerAuth: []
  *     requestBody:
@@ -94,28 +94,28 @@ router.get("/:id", (req, res) => userController.getById(req, res));
  *             type: object
  *             required:
  *               - name
- *               - email
+ *               - tipo
  *             properties:
  *               name:
  *                 type: string
- *               email:
+ *               tipo:
  *                 type: string
  *     responses:
  *       201:
- *         description: Usuário criado
+ *         description: Produto criado
  *         content:
  *           application/json:
  *             schema:
- *               $ref: '#/components/schemas/User'
+ *               $ref: '#/components/schemas/Produto'
  */
-router.post("/", (req,res) => userController.create(req, res));
+router.post("/", (req,res) => ProdutosController.create(req, res));
 
 /**
  * @swagger
  * /api/users/{id}:
  *   put:
- *     summary: Atualiza usuário
- *     tags: [Users]
+ *     summary: Atualiza Produto
+ *     tags: [Produto]
  *     security:
  *       - bearerAuth: []
  *     parameters:
@@ -133,22 +133,22 @@ router.post("/", (req,res) => userController.create(req, res));
  *             properties:
  *               name:
  *                 type: string
- *               email:
+ *               tipo:
  *                 type: string
  *     responses:
  *       200:
- *         description: Usuário atualizado
+ *         description: Produto atualizado
  *       404:
- *         description: Usuário não encontrado
+ *         description: Produto não encontrado
  */
-router.put("/:id", (req, res) => userController.update(req, res));
+router.put("/:id", (req, res) => ProdutosController.update(req, res));
 
 /**
  * @swagger
  * /api/users/{id}:
  *   delete:
- *     summary: Remove usuário
- *     tags: [Users]
+ *     summary: Remove Produto
+ *     tags: [Produto]
  *     security:
  *       - bearerAuth: []
  *     parameters:
@@ -159,10 +159,10 @@ router.put("/:id", (req, res) => userController.update(req, res));
  *         required: true
  *     responses:
  *       204:
- *         description: Usuário removido
+ *         description: Produto removido
  *       404:
- *         description: Usuário não encontrado
+ *         description: Produto não encontrado
  */
-router.delete("/:id", (req,res) => userController.delete(req, res));
+router.delete("/:id", (req,res) => ProdutosController.delete(req, res));
 
 export default router;
