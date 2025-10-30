@@ -1,67 +1,51 @@
 import { Request, Response } from "express";
-import jwt from 'jsonwebtoken';
-import bcrypt from 'bcryptjs';
+import { AuthService } from '../services/AuthService';
+import { Console } from "console";
 
-
-const JWT_SECRET = process.env.JWT_SECRET || 'sua-chave-secreta';
-
-interface LoginUser {
-    id: number;
-    email: string;
-    password: string;
-    name: string;
-}
 
 export class AuthController {
-    private users: LoginUser[] = [];
+    private authService: AuthService;
+
+
+    constructor() {
+        this.authService = new AuthService();
+    }
+
+    async register (req: Request, res: Response): Promise<Response> {
+        try{ 
+            const { name, email, password } = req.body;
+
+            if (!name || !email || !password) {
+                return res.status(400).json({message: 'Todos os campos são obrigatórios'})
+            }
+            const result = await this.authService.register({ name, email, password})
+            return res.status(201).json(result);
+        } catch (error: any) {
+            if (error.message === 'Email já cadastrado') {
+                return res.status(400).json({ message: error.message });
+            }
+            return res.status(500).json({ error: 'Erro interno do servidor' });
+        }
+    }
 
     async login(req: Request, res: Response): Promise<Response>{
-        const { email, password } = req.body;
+        try {
+            const { email, password} = req.body;
 
-        const user = this.users.find(u => u.email === email);
+            if (!email || !password) {
+                return res.status(400).json({ message: 'Email e senha são obrigatórios'})
+            }
 
-        if (!user){
-            return res.status(401).json({ message: 'Credenciais inválidas'});
+            const result = await this.authService.login(email, password);
+            return res.json(result)
+        } catch (error: any) {
+            if (error.message === 'Credenciais Invalidas' || error.message === 'Acesso não autorizado') {
+                return res.status(401).json({message: error.message});
+            }
+            Console.log(error)
+            return res.status(500).json({ error: 'Erro interno do servidor' });
         }
-        
-        const isValiPassword = await bcrypt.compare(password, user.password);
-        if (!isValiPassword){
-            return res.status(401).json({ message: 'Credenciais inválidas'});
-        }
-
-        const token = jwt.sign(
-            { userId: user.id, unserName: user.name },
-            JWT_SECRET,
-            { expiresIn: '24h' }
-        );
-
-        console.log('---- token', token);
-
-        return res.json({ token: token });
-    }
-
-    async register(req: Request, res: Response): Promise<Response> {
-        const {name, email, password} = req.body;
-
-        //TODO Validar se todas as informações forma enviada
-        //     senão, voltar 400 com msg
-
-        const existingUser = this.users.find(u => u.email === email);
-        if (existingUser) {
-            return res.status(400).json({ message: 'Email já cadastrado' });
-        }
-
-        const hashedPassword = await bcrypt.hash(password,10);
-        const newUser: LoginUser = {
-            id: this.users.length + 1,
-            name,
-            email,
-            password: hashedPassword
-        };
-
-        this.users.push(newUser);
-
-        return res.status(201).json({ message: 'Usuario criado com sucesso'});
     }
 }
+    
 

@@ -49,7 +49,7 @@ router.use(authMiddleware);
  *         description: Nenhum Produto encontrado
  */
 
-router.get("/", (req, res) => ProdutosController.getAll(req, res));
+router.get("/", (req, res) => ProdutosController.get(req, res));
 
 /**
  * @swagger
@@ -76,7 +76,7 @@ router.get("/", (req, res) => ProdutosController.getAll(req, res));
  *       404:
  *         description: Produto não encontrado
  */
-router.get("/:id", (req, res) => ProdutosController.getById(req, res));
+router.get("/:id", (req, res) => ProdutosController.getByName(req, res));
 
 /**
  * @swagger

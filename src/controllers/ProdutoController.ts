@@ -1,48 +1,80 @@
 import { Request, Response } from "express";
+import { ProdutoService } from '../services/ProdutoService';
 
-interface Produto {
-    id: number;
-    name: string;
-    tipo: string;
-
-}
 
 export class ProdutoController{
-    private prod: Produto[] = [];
-    private idCounter = 1;
+    private produtoService: ProdutoService;
 
-    getAll(req: Request, res: Response): Response{
-        return res.json(this.prod);
+    constructor() {
+        this.produtoService = new ProdutoService();
+    }
+    
+
+    async get (req: Request, res: Response): Promise<Response>{
+        try {
+            const produtos = await this.produtoService.getAllProdutos();
+            return res.json(produtos)
+        } catch (error) {
+            return res.status(500).json({ error: 'Erro interno do servidor'});
+        }
     }
 
-    getById(req: Request, res: Response): Response{
-        const id = Number(req.params.id);
-        const user = this.prod.find(p => p.id === id)
-        return user ? res.json(user) : res.status(404).json({message: "Produto not found"})
-    }
-
-    create (req: Request, res: Response): Response{
-        const {name,tipo} = req.body;
-        const newUser: Produto = {id: this.idCounter++, name, tipo};
-        this.prod.push(newUser);
-        return res.status(201).json(newUser);
-    }
-
-    update (req: Request, res: Response): Response{
-        const id = Number(req.params.id);
-        const { name, email } = req.body;
-        const user = this.prod.find(u => u.id === id);
-        if (!user) return res.status(404).json({message: "Produto not found"});
+    
+    async getByName(req: Request, res: Response): Promise<Response>{
+        try {
+            const name = req.params.name;
+            const produto = await this.produtoService.getProdutoByName(name);
+            if (!produto) {
+                return res.status(404).json({ error: 'Produto não encontrado' });
+            }
+            return res.json(produto);
+        } catch (error) {
+            return res.status(500).json({ error: 'Erro interno do servidor'});
+        }
         
-        user.name = name ?? user.name;
-        user.tipo = email ?? user.tipo;
-        return res.json(user);
     }
 
-    delete( req: Request, res: Response): Response{
-        const id = Number(req.params.id);
-        this.prod = this.prod.filter(p => p.id !== id)
-        return res.status(204).send();
+
+    async create (req: Request, res: Response): Promise<Response>{
+        try{
+            const {name, tipo} = req.body;
+            const novoPrduto = await this.produtoService.createProduto({name, tipo});
+            return res.status(201).json(novoPrduto);
+        } catch(error: any) {
+            if (error.message === 'name já existe') {
+                return res.status(400).json({ error: error.message});
+            }
+            return res.status(500).json({ error: 'Erro interno do servidor' });
+        }
     }
+
+    async update (req: Request, res: Response): Promise<Response>{
+        try {
+            const { nameInden } = req.params;
+            const { name, tipo } = req.body;
+            const produtoUpdata = await this.produtoService.updateProduto(nameInden, {name, tipo});
+            return res.json(produtoUpdata)
+        }   catch (error: any) {
+            if (error.message == 'Produto não encontrado') {
+                return res.status(404).json({error: error.message});
+            }
+            return res.status(500).json({ error: 'Erro interno do servidor'});
+        }
+    }
+
+    
+    async delete( req: Request, res: Response): Promise<Response>{
+        try {
+            const name = req.params.name;
+            const result = await this.produtoService.deleteProduto(name);
+            return res.json(result);
+        } catch (error: any) {
+            if (error.message === 'Produto não encontrado') {
+                return res.status(404).json({ error: error.message });
+            }
+            return res.status(500).json({ error: 'Erro interno do servidor' });
+        }
+    }
+
 }
  
