@@ -12,6 +12,6 @@ export const connectDatabase = async () => {
         await sequelize.sync();
         console.log("Banco de dados conectado com sucesso.");
     } catch (error) {
-        console.error("Erro ao conectar ao banco de dados:", error);
+        console.error("Erro ao conectar com o banco:", error);
     }
 };

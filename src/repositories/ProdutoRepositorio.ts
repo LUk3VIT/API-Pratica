@@ -3,11 +3,11 @@ import { Produto, ProdutoAttributes } from "../models/Produto";
 export class ProdutoRepositorio {
     
     async findall(): Promise<Produto[]> {
-        return Produto.findAll();
+        return await Produto.findAll();
     }
 
     async findByName(name: string): Promise<Produto | null> {
-        return Produto.findOne({ where: {name} });
+        return await Produto.findOne({ where: {name} });
     }
 
     async create (produtoData: Omit<ProdutoAttributes, 'id'>): Promise<Produto> {

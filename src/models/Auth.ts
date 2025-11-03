@@ -1,4 +1,4 @@
-import { DataType, DataTypes, Model } from "sequelize";
+import { DataTypes, Model } from "sequelize";
 import { sequelize } from "../config/database";
 
 export interface AuthAttributes {
@@ -37,5 +37,5 @@ Auth.init({
 }, {
     sequelize,
     modelName: 'Auth',
-    tableName: 'Auths'
+    tableName: 'auths'
 });

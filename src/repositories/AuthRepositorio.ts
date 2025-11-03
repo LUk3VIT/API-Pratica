@@ -6,11 +6,11 @@ export class AuthRepositorio {
         return await Auth.findOne({ where: { email } });
     }
 
-    async findById(id: number): Promise<AuthAttributes | null> {
+    async findById(id: number): Promise<Auth | null> {
         return await Auth.findByPk(id);
     }
     
-    async create(userData: Omit<AuthAttributes, 'id'>): Promise<Auth> {
-        return await Auth.create(userData);
+    async create(produtoData: Omit<AuthAttributes, 'id'>): Promise<Auth> {
+        return await Auth.create(produtoData);
     }
 }

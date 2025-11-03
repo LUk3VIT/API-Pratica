@@ -1,6 +1,5 @@
 import { Request, Response } from "express";
 import { AuthService } from '../services/AuthService';
-import { Console } from "console";
 
 
 export class AuthController {
@@ -39,13 +38,13 @@ export class AuthController {
             const result = await this.authService.login(email, password);
             return res.json(result)
         } catch (error: any) {
-            if (error.message === 'Credenciais Invalidas' || error.message === 'Acesso não autorizado') {
+            if (error.message === 'Credenciais inválidas' || error.message === 'Acesso não autorizado') {
                 return res.status(401).json({message: error.message});
             }
-            Console.log(error)
+
             return res.status(500).json({ error: 'Erro interno do servidor' });
         }
     }
 }
-    
+
 

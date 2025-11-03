@@ -53,9 +53,9 @@ router.get("/", (req, res) => ProdutosController.get(req, res));
 
 /**
  * @swagger
- * /api/produto/{id}:
+ * /api/produto/{name}:
  *   get:
- *     summary: Busca Produto por ID
+ *     summary: Busca Produto por Name
  *     tags: [Produto]
  *     security:
  *       - bearerAuth: []
@@ -76,7 +76,7 @@ router.get("/", (req, res) => ProdutosController.get(req, res));
  *       404:
  *         description: Produto não encontrado
  */
-router.get("/:id", (req, res) => ProdutosController.getByName(req, res));
+router.get("/:name", (req, res) => ProdutosController.getByName(req, res));
 
 /**
  * @swagger
@@ -141,7 +141,7 @@ router.post("/", (req,res) => ProdutosController.create(req, res));
  *       404:
  *         description: Produto não encontrado
  */
-router.put("/:id", (req, res) => ProdutosController.update(req, res));
+router.put("/:name", (req, res) => ProdutosController.update(req, res));
 
 /**
  * @swagger

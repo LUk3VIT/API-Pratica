@@ -19,9 +19,7 @@ app.use("/api/auth", authRoutes);
 const port = 3000;
 
 const startServer = async () =>{
-
     await connectDatabase();
-
     app.listen(port, () => {
         console.log("Servidor de API rodando na porta", port)
     });
