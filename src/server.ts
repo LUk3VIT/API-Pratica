@@ -3,7 +3,7 @@ import swaggerUi from 'swagger-ui-express';
 import { swaggerSpec } from "./config/swagger";
 import { connectDatabase } from "./config/database";
 import produtoRoutes from "./routes/produtoRoutes";
-import authRoutes from "./routes/authRoutes";        
+import authRoutes from "./routes/authRoutes"; 
 
 
 const app = express();
@@ -19,9 +19,7 @@ app.use("/api/auth", authRoutes);
 const port = 3000;
 
 const startServer = async () =>{
-
     await connectDatabase();
-
     app.listen(port, () => {
         console.log("Servidor de API rodando na porta", port)
     });

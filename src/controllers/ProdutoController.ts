@@ -50,9 +50,9 @@ export class ProdutoController{
 
     async update (req: Request, res: Response): Promise<Response>{
         try {
-            const { nameInden } = req.params;
-            const { name, tipo } = req.body;
-            const produtoUpdata = await this.produtoService.updateProduto(nameInden, {name, tipo});
+            const { name } = req.params; // corrigido: usar 'name' que vem da rota
+            const { name: newName, tipo } = req.body;
+            const produtoUpdata = await this.produtoService.updateProduto(name, { name: newName, tipo });
             return res.json(produtoUpdata)
         }   catch (error: any) {
             if (error.message == 'Produto não encontrado') {
@@ -77,4 +77,3 @@ export class ProdutoController{
     }
 
 }
- 

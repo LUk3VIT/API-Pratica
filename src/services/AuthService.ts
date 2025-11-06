@@ -1,9 +1,9 @@
 import bcrypt from 'bcryptjs';
 import jwt from 'jsonwebtoken';
 import { AuthRepositorio } from '../repositories/AuthRepositorio';
-import { Auth, AuthAttributes } from '../models/Auth';
+import { AuthAttributes } from '../models/Auth';
 
-const JWT_SECRET = process.env.JWT_SECRET as string;
+const JWT_SECRET = process.env.JWT_SECRET || 'OlhaOlhaSo';
 
 export class AuthService{
     private authRepository: AuthRepositorio;

@@ -1,7 +1,7 @@
 import { Request, Response, NextFunction } from "express";  
 import jwt from "jsonwebtoken";
 
-const JWT_SECRET = process.env.JWT_SECRET as string;
+const JWT_SECRET = process.env.JWT_SECRET || 'OlhaOlhaSo';
 
 export interface AuthRequest extends Request {
     userId?: number;
@@ -23,6 +23,7 @@ export const authMiddleware = (req: AuthRequest, res: Response, next: NextFuncti
         next();
     }
     catch (error){
+        console.error('JWT verification error:', error);
         return res.status(401).json({message: 'Token inválido'});
     }
 }

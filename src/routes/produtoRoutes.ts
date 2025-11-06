@@ -53,19 +53,19 @@ router.get("/", (req, res) => ProdutosController.get(req, res));
 
 /**
  * @swagger
- * /api/produto/{id}:
+ * /api/produto/{name}:
  *   get:
- *     summary: Busca Produto por ID
+ *     summary: Busca Produto por Name
  *     tags: [Produto]
  *     security:
  *       - bearerAuth: []
  *     parameters:
  *       - in: path
- *         name: id
+ *         name: name
  *         schema:
- *           type: integer
+ *           type: string
  *         required: true
- *         description: ID do Produto
+ *         description: Nome do Produto
  *     responses:
  *       200:
  *         description: Produto encontrado
@@ -76,7 +76,7 @@ router.get("/", (req, res) => ProdutosController.get(req, res));
  *       404:
  *         description: Produto não encontrado
  */
-router.get("/:id", (req, res) => ProdutosController.getByName(req, res));
+router.get("/:name", (req, res) => ProdutosController.getByName(req, res));
 
 /**
  * @swagger
@@ -112,7 +112,7 @@ router.post("/", (req,res) => ProdutosController.create(req, res));
 
 /**
  * @swagger
- * /api/users/{id}:
+ * /api/produto/{name}:
  *   put:
  *     summary: Atualiza Produto
  *     tags: [Produto]
@@ -120,9 +120,9 @@ router.post("/", (req,res) => ProdutosController.create(req, res));
  *       - bearerAuth: []
  *     parameters:
  *       - in: path
- *         name: id
+ *         name: name
  *         schema:
- *           type: integer
+ *           type: string
  *         required: true
  *     requestBody:
  *       required: true
@@ -141,11 +141,11 @@ router.post("/", (req,res) => ProdutosController.create(req, res));
  *       404:
  *         description: Produto não encontrado
  */
-router.put("/:id", (req, res) => ProdutosController.update(req, res));
+router.put("/:name", (req, res) => ProdutosController.update(req, res));
 
 /**
  * @swagger
- * /api/users/{id}:
+ * /api/produto/{name}:
  *   delete:
  *     summary: Remove Produto
  *     tags: [Produto]
@@ -153,9 +153,9 @@ router.put("/:id", (req, res) => ProdutosController.update(req, res));
  *       - bearerAuth: []
  *     parameters:
  *       - in: path
- *         name: id
+ *         name: name
  *         schema:
- *           type: integer
+ *           type: string
  *         required: true
  *     responses:
  *       204:
@@ -163,6 +163,6 @@ router.put("/:id", (req, res) => ProdutosController.update(req, res));
  *       404:
  *         description: Produto não encontrado
  */
-router.delete("/:id", (req,res) => ProdutosController.delete(req, res));
+router.delete("/:name", (req,res) => ProdutosController.delete(req, res));
 
 export default router;
