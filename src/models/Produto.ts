@@ -1,35 +1,38 @@
-import { DataTypes, Model } from 'sequelize';
-import { sequelize } from '../config/database';
+import { DataTypes, Model } from "sequelize";
+import { sequelize } from "../config/database";
 
 export interface ProdutoAttributes {
-    id?: number;
-    name: string;
-    tipo: string;
+  id?: number;
+  name: string;
+  preco: number;
 }
 
-export class Produto extends Model<ProdutoAttributes> implements ProdutoAttributes{
-    public id!: number;
-    public name!: string;
-    public tipo!: string;
+export class Produto extends Model<ProdutoAttributes> implements ProdutoAttributes {
+  public id!: number;
+  public name!: string;
+  public preco!: number;
 }
 
-Produto.init({
+Produto.init(
+  {
     id: {
-        type: DataTypes.INTEGER,
-        autoIncrement: true,
-        primaryKey: true
+      type: DataTypes.INTEGER,
+      autoIncrement: true,
+      primaryKey: true,
     },
     name: {
-        type: DataTypes.STRING,
-        allowNull: false
+      type: DataTypes.STRING,
+      allowNull: false,
+      unique: true,
     },
-    tipo: {
-        type: DataTypes.STRING,
-        allowNull: false
-    }
-}, {
+    preco: {
+      type: DataTypes.FLOAT,
+      allowNull: false,
+    },
+  },
+  {
     sequelize,
-    modelName: 'Produto',
-    tableName: 'produtos' 
-}
+    modelName: "Produto",
+    tableName: "produtos",
+  }
 );

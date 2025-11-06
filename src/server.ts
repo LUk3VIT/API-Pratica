@@ -12,8 +12,8 @@ app.use(express.json());
 app.use(express.static(path.join(__dirname, "/public")));
 
 app.use("/api-docs", swaggerUi.serve, swaggerUi.setup(swaggerSpec));
-app.use("/api/produto", produtoRoutes);
 app.use("/api/auth", authRoutes);
+app.use("/api/produto", produtoRoutes);
 
 app.get(/.*/, (req, res) => {
   res.sendFile(path.join(__dirname, "/public/index.html"));

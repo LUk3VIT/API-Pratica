@@ -1,21 +1,23 @@
 <!DOCTYPE html>
 <html lang="pt-BR">
 <head>
-  <meta charset="UTF-8" />
-  <title>Produtos</title>
-  <script src="js/api.js"></script>
-  <script src="js/produtos.js" defer></script>
+    <meta charset="UTF-8" />
+    <title>Produtos</title>
+    <script src="js/api.js"></script>
+    <script src="js/produtos.js" defer></script>
+    <script src="css/styles.css"></script>
 </head>
-<body>
-  <h1>Gerenciar Produtos</h1>
-  <button id="logout">Sair</button>
 
-  <form id="produtoForm">
-    <input type="text" name="nome" placeholder="Nome do produto" required />
-    <input type="number" step="0.01" name="preco" placeholder="Preço" required />
-    <button type="submit">Adicionar</button>
-  </form>
+<body class="body-css">
+    <h1>Gerenciar produtos</h1>
+    <button id="logout">Sair</button>
 
-  <ul id="listaProdutos"></ul>
+    <form class="form-css" id="produtoForm">
+      <input type="text" id="nomeProd" name="nome" placeholder="Nome do produto" required/>
+      <input type="number" id="precoProd" step="0.05" name="preco" placeholder="Preço" required/>
+      <button type="submit">Adicionar</button>
+    </form>
+
+    <ul id="listaProdutos"></ul>
 </body>
 </html>

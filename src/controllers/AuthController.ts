@@ -11,6 +11,7 @@ export class AuthController {
     }
 
     async register (req: Request, res: Response): Promise<Response> {
+
         try{ 
             const { name, email, password } = req.body;
 
@@ -28,6 +29,7 @@ export class AuthController {
     }
 
     async login(req: Request, res: Response): Promise<Response>{
+
         try {
             const { email, password} = req.body;
 

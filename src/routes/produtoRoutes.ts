@@ -15,30 +15,30 @@ router.use(authMiddleware);
  *          type: object
  *          required:
  *              - name
- *              - tipo
+ *              - preco
  *          properties:
  *              id:
  *                  type: integer
  *                  description: ID único do produto
- *              name: 
+ *              name:
  *                  type: string
  *                  description: Nome do produto
- *              tipo:
- *                  type: string
- *                  description: Categoria do produto
+ *              preco:
+ *                  type: number
+ *                  description: Preço do produto
  */
 
 /**
  * @swagger
  * /api/produto:
  *   get:
- *     summary: Lista todos os Produtos
+ *     summary: Lista todos os produtos
  *     tags: [Produto]
  *     security:
  *       - bearerAuth: []
  *     responses:
  *       200:
- *         description: Lista de Produtos
+ *         description: Lista de produtos cadastrados
  *         content:
  *           application/json:
  *             schema:
@@ -46,16 +46,15 @@ router.use(authMiddleware);
  *               items:
  *                 $ref: '#/components/schemas/Produto'
  *       404:
- *         description: Nenhum Produto encontrado
+ *         description: Nenhum produto encontrado
  */
-
 router.get("/", (req, res) => ProdutosController.get(req, res));
 
 /**
  * @swagger
  * /api/produto/{name}:
  *   get:
- *     summary: Busca Produto por Name
+ *     summary: Busca produto por nome
  *     tags: [Produto]
  *     security:
  *       - bearerAuth: []
@@ -65,7 +64,7 @@ router.get("/", (req, res) => ProdutosController.get(req, res));
  *         schema:
  *           type: string
  *         required: true
- *         description: Nome do Produto
+ *         description: Nome do produto
  *     responses:
  *       200:
  *         description: Produto encontrado
@@ -82,7 +81,7 @@ router.get("/:name", (req, res) => ProdutosController.getByName(req, res));
  * @swagger
  * /api/produto:
  *   post:
- *     summary: Cria novo Produtos
+ *     summary: Cria um novo produto
  *     tags: [Produto]
  *     security:
  *       - bearerAuth: []
@@ -94,12 +93,12 @@ router.get("/:name", (req, res) => ProdutosController.getByName(req, res));
  *             type: object
  *             required:
  *               - name
- *               - tipo
+ *               - preco
  *             properties:
  *               name:
  *                 type: string
- *               tipo:
- *                 type: string
+ *               preco:
+ *                 type: number
  *     responses:
  *       201:
  *         description: Produto criado
@@ -108,13 +107,13 @@ router.get("/:name", (req, res) => ProdutosController.getByName(req, res));
  *             schema:
  *               $ref: '#/components/schemas/Produto'
  */
-router.post("/", (req,res) => ProdutosController.create(req, res));
+router.post("/", (req, res) => ProdutosController.create(req, res));
 
 /**
  * @swagger
  * /api/produto/{name}:
  *   put:
- *     summary: Atualiza Produto
+ *     summary: Atualiza um produto existente
  *     tags: [Produto]
  *     security:
  *       - bearerAuth: []
@@ -124,6 +123,7 @@ router.post("/", (req,res) => ProdutosController.create(req, res));
  *         schema:
  *           type: string
  *         required: true
+ *         description: Nome atual do produto
  *     requestBody:
  *       required: true
  *       content:
@@ -131,10 +131,12 @@ router.post("/", (req,res) => ProdutosController.create(req, res));
  *           schema:
  *             type: object
  *             properties:
- *               name:
+ *               newName:
  *                 type: string
- *               tipo:
- *                 type: string
+ *                 description: Novo nome (opcional)
+ *               preco:
+ *                 type: number
+ *                 description: Novo preço (opcional)
  *     responses:
  *       200:
  *         description: Produto atualizado
@@ -147,7 +149,7 @@ router.put("/:name", (req, res) => ProdutosController.update(req, res));
  * @swagger
  * /api/produto/{name}:
  *   delete:
- *     summary: Remove Produto
+ *     summary: Remove um produto existente
  *     tags: [Produto]
  *     security:
  *       - bearerAuth: []
@@ -157,12 +159,13 @@ router.put("/:name", (req, res) => ProdutosController.update(req, res));
  *         schema:
  *           type: string
  *         required: true
+ *         description: Nome do produto a remover
  *     responses:
- *       204:
+ *       200:
  *         description: Produto removido
  *       404:
  *         description: Produto não encontrado
  */
-router.delete("/:name", (req,res) => ProdutosController.delete(req, res));
+router.delete("/:name", (req, res) => ProdutosController.delete(req, res));
 
 export default router;
