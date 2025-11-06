@@ -169,8 +169,12 @@ body {
   background-color: #3268a8;
 }
 
-.auth-card button:hover {
+.auth-card .login-section button:hover {
   background-color: #005fa3;
+}
+
+.auth-card .register-section button:hover {
+    background-color: #b1b1b1;
 }
 
 .msg {
