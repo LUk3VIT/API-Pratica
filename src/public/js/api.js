@@ -1,4 +1,4 @@
-const API_URL = "http://localhost:3000"; // <--------- mudar aqui quando colocar no azure, ele muda a URL
+const API_URL = "https://examplesite.azurewebsites.net/"; // <--------- mudar aqui quando colocar no azure, ele muda a URL
 let sessionHandled = false;
 
 async function apiRequest(endpoint, method = "GET", body = null, token = null) {
