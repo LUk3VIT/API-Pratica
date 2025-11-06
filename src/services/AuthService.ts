@@ -30,7 +30,7 @@ export class AuthService {
   async login(email: string, password: string) {
     const user = await this.authRepository.findByEmail(email);
     if (!user) {
-      throw new Error('Credenciais inválidas');
+      throw new Error('Email e/ou senha inválidos');
     }
 
     const validPassword = await bcrypt.compare(password, user.password);

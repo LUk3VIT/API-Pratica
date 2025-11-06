@@ -14,7 +14,7 @@ if (form) {
     const data = await apiRequest("/api/produto", "POST", { name, preco }, token);
 
     if (data.error) {
-      alert(data.error || data.message);
+      if (data.message !== "Sessão expirada") alert(data.error || data.message);
       form.reset();
       return;
     }
@@ -24,15 +24,16 @@ if (form) {
   });
 }
 
-
 async function carregarProdutos() {
   if (!list) return;
 
   const produtos = await apiRequest("/api/produto", "GET", null, token);
 
   if (!Array.isArray(produtos)) {
-    console.error("Resposta inesperada:", produtos);
-    alert("Erro ao carregar produtos");
+    if (produtos.message !== "Sessão expirada") {
+      console.error("Resposta inesperada:", produtos);
+      alert("Erro ao carregar produtos");
+    }
     return;
   }
 
@@ -40,9 +41,10 @@ async function carregarProdutos() {
   produtos.forEach((p) => {
     const item = document.createElement("li");
     item.innerHTML = `
-      <strong>${p.name}</strong> - R$ ${p.preco.toFixed(2)}
-      <button onclick="editProd('${p.name}')">✏️</button>
-      <button onclick="deleteProd('${p.name}')">🗑️</button>
+      <span class="produto-nome"><strong>${p.name}</strong></span> 
+      <span class="produto-preco">R$ ${p.preco.toFixed(2)}</span>
+      <button id="editButton" class="btn-acao" onclick="editProd('${p.name}')">✏️</button>
+      <button id="deleteButton" class="btn-acao" onclick="deleteProd('${p.name}')">🗑️</button>
     `;
     list.appendChild(item);
   });
@@ -51,7 +53,6 @@ async function carregarProdutos() {
 async function editProd(name) {
   const novoNome = prompt("Novo nome:", name);
   const novoPreco = parseFloat(prompt("Novo preço:"));
-
   if (!novoNome || isNaN(novoPreco)) return alert("Dados inválidos");
 
   await apiRequest(`/api/produto/${name}`, "PUT", { newName: novoNome, preco: novoPreco }, token);

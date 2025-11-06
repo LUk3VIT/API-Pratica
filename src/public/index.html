@@ -2,32 +2,61 @@
 <html lang="pt-BR">
 <head>
   <meta charset="UTF-8" />
-  <title>Login e Cadastro</title>
+  <title>Aurora visual | Login e Cadastro</title>
   <script src="js/api.js"></script>
   <script src="js/auth.js" defer></script>
-  <script src="css/styles.css"></script>
+  <link rel="stylesheet" href="/css/styles.css" />
+  <link rel="icon" href="https://cdn-icons-png.flaticon.com/512/5021/5021672.png" type="image/png">
 </head>
 
-<body class="body-css">
+<body>
+  <div class="auth-container">
+    <div class="auth-card">
 
-  <h2>Login</h2>
-  <div id="loginMsg" class="msg"></div>
+      <div class="login-section">
+        <h2>Login</h2>
+        <div id="loginMsg" class="msg"></div>
 
-  <form class="form-css" id="loginForm">
-    <input type="email" name="email" placeholder="Email" required /><br>
-    <input type="password" name="senha" placeholder="Senha" required /><br>
-    <button type="submit">Entrar</button>
-  </form>
+        <form id="loginForm">
+          <div class="form-group">
+            <input type="email" name="email" id="loginEmail" placeholder=" " required />
+            <label for="loginEmail">Email</label>
+          </div>
 
-  <h2>Cadastro</h2>
-  <div id="registerMsg" class="msg"></div>
+          <div class="form-group">
+            <input type="password" name="senha" id="loginSenha" placeholder=" " required />
+            <label for="loginSenha">Senha</label>
+          </div>
 
-  <form class="form-css" id="registerForm">
-    <input type="text" name="nome" placeholder="Nome" required /><br>
-    <input type="email" name="email" placeholder="Email" required /><br>
-    <input type="password" name="senha" placeholder="Senha" required /><br>
-    <button type="submit">Cadastrar</button>
-  </form>
+          <button type="submit">Entrar</button>
+        </form>
+      </div>
 
+      <div class="register-section">
+        <h2>Cadastrar-se</h2>
+        <div id="registerMsg" class="msg"></div>
+
+        <form id="registerForm">
+          <div class="form-group">
+            <input type="text" name="nome" id="cadNome" placeholder=" " required />
+            <label for="cadNome">Nome</label>
+          </div>
+
+          <div class="form-group">
+            <input type="email" name="email" id="cadEmail" placeholder=" " required />
+            <label for="cadEmail">Email</label>
+          </div>
+
+          <div class="form-group">
+            <input type="password" name="senha" id="cadSenha" placeholder=" " required />
+            <label for="cadSenha">Senha</label>
+          </div>
+
+          <button type="submit">Cadastrar</button>
+        </form>
+      </div>
+
+    </div>
+  </div>
 </body>
 </html>

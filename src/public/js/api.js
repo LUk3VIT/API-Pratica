@@ -1,4 +1,5 @@
 const API_URL = "http://localhost:3000"; // <--------- mudar aqui quando colocar no azure, ele muda a URL
+let sessionHandled = false;
 
 async function apiRequest(endpoint, method = "GET", body = null, token = null) {
   const headers = { "Content-Type": "application/json" };
@@ -10,16 +11,13 @@ async function apiRequest(endpoint, method = "GET", body = null, token = null) {
     body: body ? JSON.stringify(body) : null,
   });
 
-    if (response.status === 401) {
-
-    if (!endpoint.includes("/auth/login")) {
-        alert("Sessão expirada. Faça login novamente.");
-        localStorage.removeItem("token");
-        window.location.href = "index.html";
-    }
-
-    return await response.json();
-    }
+  if (response.status === 401 && !sessionHandled) {
+    sessionHandled = true;
+    localStorage.removeItem("token");
+    alert("Sessão expirada. Faça login novamente.");
+    window.location.href = "index.html";
+    return { error: true, message: "Sessão expirada" };
+  }
 
   try {
     return await response.json();
@@ -30,12 +28,10 @@ async function apiRequest(endpoint, method = "GET", body = null, token = null) {
 
 function verifyLogin() {
   const token = localStorage.getItem("token");
-
   if (!token) {
-    alert("Você precisa estar logado para acessar essa página");
+    alert("Acesso não identificado. Faça login novamente.");
     window.location.href = "index.html";
   }
-
   return token;
 }
 

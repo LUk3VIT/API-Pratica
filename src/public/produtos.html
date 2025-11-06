@@ -2,22 +2,34 @@
 <html lang="pt-BR">
 <head>
     <meta charset="UTF-8" />
-    <title>Produtos</title>
+    <title>Aurora visual | Produtos</title>
     <script src="js/api.js"></script>
     <script src="js/produtos.js" defer></script>
-    <script src="css/styles.css"></script>
+    <link rel="stylesheet" href="/css/styles.css"></link>
+    <link rel="icon" href="https://cdn-icons-png.flaticon.com/512/5021/5021672.png" type="image/png">
 </head>
 
-<body class="body-css">
+<body>
     <h1>Gerenciar produtos</h1>
     <button id="logout">Sair</button>
 
-    <form class="form-css" id="produtoForm">
-      <input type="text" id="nomeProd" name="nome" placeholder="Nome do produto" required/>
-      <input type="number" id="precoProd" step="0.05" name="preco" placeholder="Preço" required/>
-      <button type="submit">Adicionar</button>
-    </form>
+    <div class="products">
+        <form id="produtoForm">
+            <div class="form-produto">
+            <input type="text" id="nomeProd" name="nome" placeholder=" " required />
+            <label for="nomeProd">Nome do produto</label>
+            </div>
 
-    <ul id="listaProdutos"></ul>
+            <div class="form-produto">
+                <input type="number" id="precoProd" step="0.05" name="preco" placeholder=" " required />
+                <label for="precoProd">Preço</label>
+            </div>
+
+            <button class="addProductButton" type="submit">Adicionar</button>
+        </form>
+
+        <ul id="listaProdutos"></ul>
+    </div>
+
 </body>
 </html>
