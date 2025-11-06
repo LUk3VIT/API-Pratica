@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8" />
+    <title>Aurora visual | Produtos</title>
+    <script src="js/api.js"></script>
+    <script src="js/produtos.js" defer></script>
+    <link rel="stylesheet" href="/css/styles.css"></link>
+    <link rel="icon" href="https://cdn-icons-png.flaticon.com/512/5021/5021672.png" type="image/png">
+</head>
+
+<body>
+    <h1>Gerenciar produtos</h1>
+    <button id="logout">Sair</button>
+
+    <div class="products">
+        <form id="produtoForm">
+            <div class="form-produto">
+            <input type="text" id="nomeProd" name="nome" placeholder=" " required />
+            <label for="nomeProd">Nome do produto</label>
+            </div>
+
+            <div class="form-produto">
+                <input type="number" id="precoProd" step="0.05" name="preco" placeholder=" " required />
+                <label for="precoProd">Preço</label>
+            </div>
+
+            <button class="addProductButton" type="submit">Adicionar</button>
+        </form>
+
+        <ul id="listaProdutos"></ul>
+    </div>
+
+</body>
+</html>

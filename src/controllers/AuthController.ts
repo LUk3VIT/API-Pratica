@@ -11,6 +11,7 @@ export class AuthController {
     }
 
     async register (req: Request, res: Response): Promise<Response> {
+
         try{ 
             const { name, email, password } = req.body;
 
@@ -28,6 +29,7 @@ export class AuthController {
     }
 
     async login(req: Request, res: Response): Promise<Response>{
+
         try {
             const { email, password} = req.body;
 
@@ -38,7 +40,7 @@ export class AuthController {
             const result = await this.authService.login(email, password);
             return res.json(result)
         } catch (error: any) {
-            if (error.message === 'Credenciais inválidas' || error.message === 'Acesso não autorizado') {
+            if (error.message === 'Email e/ou senha inválidos' || error.message === 'Acesso não autorizado') {
                 return res.status(401).json({message: error.message});
             }
 

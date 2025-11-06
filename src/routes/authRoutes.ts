@@ -49,7 +49,7 @@ const authController = new AuthController();
  *                 user:
  *                   type: object
  *       401:
- *         description: Credenciais inválidas
+ *         description: Email e/ou senha inválidos
  */
 router.post("/login", (req, res) => authController.login(req, res));
 
