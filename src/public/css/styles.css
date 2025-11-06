@@ -187,6 +187,15 @@ body {
   width: 100%;
 }
 
+#loginMsg {
+  transform: translateY(7.5rem);
+}
+
+#registerMsg {
+    transform: translateY(3.5rem);
+}
+
+
 .success {
   color: green;
 }
