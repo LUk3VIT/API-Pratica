@@ -10,7 +10,7 @@ const options = {
         },
         servers :[
             {
-                url: 'examplesite.azurewebsites.net',
+                url: 'http://localhost:3000',
                 description: 'Servidor de desenvolvimento',
             },
         ],
