@@ -22,4 +22,5 @@ RUN adduser -S nextjs -u 1001
 USER nextjs
 
 # Comando para iniciar a aplicação
-ENTRYPOINT ["npm", "run", "dev"]
+RUN npm run build
+CMD ["npm", "start"]
