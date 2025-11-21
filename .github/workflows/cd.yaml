@@ -47,3 +47,4 @@ jobs:
           region: eu-central-1
           version_label: "build-${{ github.run_number }}"
           deployment_package: deploy.zip
+          bucket_name: "eb-deploy-api-pratica-us-east-1"
