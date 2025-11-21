@@ -42,9 +42,9 @@ jobs:
         with:
           aws_access_key: ${{ secrets.AWS_ACCESS_KEY_ID }}
           aws_secret_key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
-          application_name: Api-Prati
-          environment_name: Api-Prati-env
+          application_name: api-pratica-eu
+          environment_name: Api-pratica-eu-env
           region: eu-central-1
           version_label: "build-${{ github.run_number }}"
           deployment_package: deploy.zip
-          bucket_name: "eb-deploy-api-pratica-us-east-1"
+          existing_bucket_name: "eb-deploy-api-pratica-us-east-1"
