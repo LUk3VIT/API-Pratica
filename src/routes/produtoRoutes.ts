@@ -15,7 +15,7 @@ router.use(authMiddleware);
  *          type: object
  *          required:
  *              - name
- *              - tipo
+ *              - valor
  *          properties:
  *              id:
  *                  type: integer
@@ -23,9 +23,9 @@ router.use(authMiddleware);
  *              name: 
  *                  type: string
  *                  description: Nome do produto
- *              tipo:
- *                  type: string
- *                  description: Categoria do produto
+ *              valor:
+ *                  type: number
+ *                  description: Valor do Produto
  */
 
 /**
@@ -94,12 +94,12 @@ router.get("/:name", (req, res) => ProdutosController.getByName(req, res));
  *             type: object
  *             required:
  *               - name
- *               - tipo
+ *               - valor
  *             properties:
  *               name:
  *                 type: string
- *               tipo:
- *                 type: string
+ *               valor:
+ *                 type: number
  *     responses:
  *       201:
  *         description: Produto criado
@@ -133,7 +133,7 @@ router.post("/", (req,res) => ProdutosController.create(req, res));
  *             properties:
  *               name:
  *                 type: string
- *               tipo:
+ *               valor:
  *                 type: string
  *     responses:
  *       200:

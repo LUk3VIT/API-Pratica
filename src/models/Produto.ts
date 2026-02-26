@@ -4,13 +4,13 @@ import { sequelize } from '../config/database';
 export interface ProdutoAttributes {
     id?: number;
     name: string;
-    tipo: string;
+    valor: number;
 }
 
 export class Produto extends Model<ProdutoAttributes> implements ProdutoAttributes{
     public id!: number;
     public name!: string;
-    public tipo!: string;
+    public valor!: number;
 }
 
 Produto.init({
@@ -23,8 +23,8 @@ Produto.init({
         type: DataTypes.STRING,
         allowNull: false
     },
-    tipo: {
-        type: DataTypes.STRING,
+    valor: {
+        type: DataTypes.NUMBER,
         allowNull: false
     }
 }, {

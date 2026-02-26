@@ -37,8 +37,8 @@ export class ProdutoController{
 
     async create (req: Request, res: Response): Promise<Response>{
         try{
-            const {name, tipo} = req.body;
-            const novoPrduto = await this.produtoService.createProduto({name, tipo});
+            const {name, valor} = req.body;
+            const novoPrduto = await this.produtoService.createProduto({name, valor});
             return res.status(201).json(novoPrduto);
         } catch(error: any) {
             if (error.message === 'name já existe') {
@@ -51,8 +51,8 @@ export class ProdutoController{
     async update (req: Request, res: Response): Promise<Response>{
         try {
             const { name } = req.params; // corrigido: usar 'name' que vem da rota
-            const { name: newName, tipo } = req.body;
-            const produtoUpdata = await this.produtoService.updateProduto(name, { name: newName, tipo });
+            const { name: newName, valor: newValor } = req.body;
+            const produtoUpdata = await this.produtoService.updateProduto(name, { name: newName, valor: newValor });
             return res.json(produtoUpdata)
         }   catch (error: any) {
             if (error.message == 'Produto não encontrado') {
