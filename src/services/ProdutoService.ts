@@ -17,19 +17,29 @@ export class ProdutoService {
     }
 
     async createProduto(produtoData: Omit<ProdutoAttributes, 'id'>) {
-        const existProduto = await this.produtoRepositorio.findByName(produtoData.name!);
-        if (existProduto) {
-            throw new Error('Produto não encontrado');
+
+        if (produtoData.valor <= 0) {
+            throw new Error('Valor deve ser maior que zero');
+        }else{
+            const existProduto = await this.produtoRepositorio.findByName(produtoData.name!);
+            if (existProduto) {
+                throw new Error('Produto ja Criado');   
+            }
+            return await this.produtoRepositorio.create(produtoData);
         }
-        return await this.produtoRepositorio.create(produtoData);
+        
     }
 
-    async updateProduto(name: string, produtoData: Partial<ProdutoAttributes>) {
-        const produto = await this.produtoRepositorio.update(name, produtoData);
-        if(!produto){
-            throw new Error ('Produto não encontrado');
+    async updateProduto(name: string, valor: number, produtoData: Partial<ProdutoAttributes>) {
+        if( valor <= 0) {
+            throw new Error ('Valor deve ser maior que zero');
+        }else {
+            const produto = await this.produtoRepositorio.update(name, produtoData);
+            if(!produto){
+                throw new Error ('Produto não encontrado'); 
+            }
+            return produto;
         }
-        return produto;
     }
 
     async deleteProduto(name: string){

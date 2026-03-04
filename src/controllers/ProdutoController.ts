@@ -1,5 +1,6 @@
 import { Request, Response } from "express";
 import { ProdutoService } from '../services/ProdutoService';
+import { exit } from "process";
 
 
 export class ProdutoController{
@@ -44,6 +45,9 @@ export class ProdutoController{
             if (error.message === 'name já existe') {
                 return res.status(400).json({ error: error.message});
             }
+            if (error.message === 'Valor deve ser maior que zero') {
+                return res.status(400).json({ error: error.message});
+            }
             return res.status(500).json({ error: 'Erro interno do servidor' });
         }
     }
@@ -52,11 +56,14 @@ export class ProdutoController{
         try {
             const { name } = req.params; // corrigido: usar 'name' que vem da rota
             const { name: newName, valor: newValor } = req.body;
-            const produtoUpdata = await this.produtoService.updateProduto(name, { name: newName, valor: newValor });
+            const produtoUpdata = await this.produtoService.updateProduto(name, newValor,{ name: newName, valor: newValor });
             return res.json(produtoUpdata)
         }   catch (error: any) {
             if (error.message == 'Produto não encontrado') {
                 return res.status(404).json({error: error.message});
+            }
+            if (error.message === 'Valor deve ser maior que zero'){
+                return res.status(400).json({ error: error.message});
             }
             return res.status(500).json({ error: 'Erro interno do servidor'});
         }
