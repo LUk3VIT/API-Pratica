@@ -9,7 +9,7 @@ Badges
 - (adicione CI / coverage / license conforme disponível)
 
 Tecnologias
-- Node.js, TypeScript, Express
+- Node.js, TypeScript, Express, Cors
 - Sequelize + SQLite
 - JWT (jsonwebtoken) + bcryptjs
 - Swagger (swagger-jsdoc + swagger-ui-express)
@@ -23,15 +23,8 @@ Instalação e execução
 ```sh
 npm install
 ```
-2. Crie arquivo de ambiente `.env.local` (exemplo):
-```env
-# JWT secret para gerar/verificar tokens
-JWT_SECRET=uma_chave_secreta
-# Opcional: porta e caminho do DB
-PORT=3000
-DB_STORAGE=./database.sqlite
-```
-3. Rodar em desenvolvimento:
+
+2. Rodar em desenvolvimento:
 ```sh
 npm run dev
 ```
@@ -68,7 +61,7 @@ Endpoints principais
   - GET /api/produto/:id — obter produto
   - POST /api/produto — criar produto  
     Exemplo header: Authorization: Bearer <TOKEN>  
-    Exemplo body: { "name":"Produto A", "tipo":"eletrônico" }
+    Exemplo body: { "name":"Produto A", "Valor":"$$$" }
   - PUT /api/produto/:id — atualizar
   - DELETE /api/produto/:id — remover
 
